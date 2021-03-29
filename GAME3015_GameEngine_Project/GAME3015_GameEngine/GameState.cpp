@@ -61,8 +61,8 @@ void GameState::BuildScene()
 	
 	std::unique_ptr<SpriteNode> backgroundSprite(new SpriteNode(mGame, "PauseDisplay"));
 	mPauseBackground = backgroundSprite.get();
-	mPauseBackground->setPosition(0, 0.15, 0);
-	mPauseBackground->setScale(6, 1.0, 6);
+	mPauseBackground->setPosition(0, 0.15, -1);
+	mPauseBackground->setScale(8, 1.0, 8);
 	mPauseBackground->setVelocity(0, 0, 0);
 	mPauseSceneGraph->attachChild(std::move(backgroundSprite));
 
@@ -72,8 +72,4 @@ void GameState::BuildScene()
 		mGame->mOpaqueRitems.push_back(e.get());
 
 	mGame->BuildFrameResources();
-
-
-
-
 }

@@ -31,9 +31,9 @@ bool PauseState::update(const GameTimer& gt)
 bool PauseState::handleEvent(WPARAM btnState)
 {
 	
-	if (btnState == 'O' )
+	if (btnState == 'P' )
 	{
-		// O pressed, remove itself to return to the game
+		// P pressed, remove itself to return to the game
 		requestStackPop();
 	}
 	else if (btnState == VK_BACK)

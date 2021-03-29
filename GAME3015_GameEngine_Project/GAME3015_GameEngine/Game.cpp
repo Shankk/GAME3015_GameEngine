@@ -345,7 +345,7 @@ void Game::LoadTextures()
 	//MenuBackground
 	auto TitlePromptTex = std::make_unique<Texture>();
 	TitlePromptTex->Name = "TitlePrompt";
-	TitlePromptTex->Filename = L"../../Textures/Press_Any_Key.dds";
+	TitlePromptTex->Filename = L"../../Textures/PressAnyKey.dds";
 	ThrowIfFailed(DirectX::CreateDDSTextureFromFile12(md3dDevice.Get(),
 		mCommandList.Get(), TitlePromptTex->Filename.c_str(),
 		TitlePromptTex->Resource, TitlePromptTex->UploadHeap));

@@ -116,7 +116,7 @@ void SettingState::BuildScene()
 
 	mGame->BuildMaterials();
 
-	std::unique_ptr<SpriteNode> backgroundSprite(new SpriteNode(mGame));
+	std::unique_ptr<SpriteNode> backgroundSprite(new SpriteNode(mGame, "TitleScreen"));
 	mBackground = backgroundSprite.get();
 	mBackground->setPosition(0, 0, 0.0);
 	mBackground->setScale(12.0, 1.0, 8.5);
