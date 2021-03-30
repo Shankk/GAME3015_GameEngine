@@ -29,12 +29,12 @@ class MenuState : public State
 
 	private:
 
-		SceneNode* mSceneGraph;
-		SpriteNode* mBackground;
-		SpriteNode* mMenuPlay;
-		SpriteNode* mMenuSetting;
-		SpriteNode* mMenuQuit;
-		SpriteNode* mMenuSelector;
+		SceneNode* m_SceneGraph;
+		SpriteNode* m_MenuScreenBackground;
+		SpriteNode* m_PlayButton;
+		SpriteNode* m_SettingButton;
+		SpriteNode* m_QuitButton;
+		SpriteNode* m_SelectorSprite;
 
 		std::vector<SpriteNode*>	mOptions;
 		std::size_t				mOptionIndex;

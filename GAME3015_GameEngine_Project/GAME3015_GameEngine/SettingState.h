@@ -27,12 +27,12 @@ private:
 
 private:
 
-	SceneNode* mSceneGraph;
-	SpriteNode* mBackground;
-	SpriteNode* mSettingWASD;
-	SpriteNode* mSettingARROW;
-	SpriteNode* mMenuQuit;
-	SpriteNode* mMenuSelector;
+	SceneNode* m_SceneGraph;
+	SpriteNode* m_SettingBackground;
+	SpriteNode* m_KeybindWASD;
+	SpriteNode* m_KeybindARROW;
+	SpriteNode* m_QuitButton;
+	SpriteNode* m_SelectorSprite;
 	std::vector<SpriteNode*>	mOptions;
 	std::size_t				mOptionIndex;
 	int mTotalNumOptions;

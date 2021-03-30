@@ -11,21 +11,20 @@
 class PauseState : public State
 {
 	public:
-							PauseState(StateStack& stack, Context context, Game* game);
-							~PauseState();
+		PauseState(StateStack& stack, Context context, Game* game);
+		~PauseState();
 
-		virtual void		draw();
-		virtual bool		update(const GameTimer& gt);
-		virtual bool		handleEvent(WPARAM btnState);
+	virtual void	draw();
+	virtual bool	update(const GameTimer& gt);
+	virtual bool	handleEvent(WPARAM btnState);
 
 
-	private:
-		SceneNode* mSceneGraph;
-		SpriteNode* mBackground;
-		SpriteNode* mPausedText;
-		SpriteNode* mInstructionText;
-		// Inherited via State
-		virtual void BuildScene() override;
+	public:
+	SceneNode* m_SceneGraph;
+	SpriteNode* m_PauseBackground;
+	
+	// Inherited via State
+	virtual void BuildScene() override;
 };
 
 #pragma endregion

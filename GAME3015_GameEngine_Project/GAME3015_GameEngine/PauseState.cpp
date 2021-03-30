@@ -6,7 +6,8 @@
 
 PauseState::PauseState(StateStack& stack, Context context, Game* game)
 : State(stack, context, game)
-
+, m_SceneGraph(new SceneNode(game))
+, m_PauseBackground(nullptr)
 {
 	BuildScene();
 }
@@ -17,28 +18,23 @@ PauseState::~PauseState()
 
 void PauseState::draw()
 {
-	((GameState*)((*mStack->GetStateStack())[0].get()))->mPauseSceneGraph->draw();
-	
+	((GameState*)((*mStack->GetStateStack())[0].get()))->m_PauseSceneGraph->draw();
 }
 
 bool PauseState::update(const GameTimer& gt)
 {
-	((GameState*)((*mStack->GetStateStack())[0].get()))->mPauseSceneGraph->update(gt);
-	
+	((GameState*)((*mStack->GetStateStack())[0].get()))->m_PauseSceneGraph->update(gt);
 	return false;
 }
 
 bool PauseState::handleEvent(WPARAM btnState)
 {
-	
 	if (btnState == 'P' )
 	{
-		// P pressed, remove itself to return to the game
 		requestStackPop();
 	}
 	else if (btnState == VK_BACK)
 	{
-		// Escape pressed, remove itself to return to the game
 		requestStateClear();
 		requestStackPush(States::Menu);
 	}
@@ -46,9 +42,9 @@ bool PauseState::handleEvent(WPARAM btnState)
 	return false;
 }
 
-
 void PauseState::BuildScene()
 {
+	
 }
 
 #pragma endregion

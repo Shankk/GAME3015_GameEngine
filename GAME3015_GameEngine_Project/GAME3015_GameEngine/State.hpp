@@ -27,7 +27,7 @@ class State
 		virtual void		draw() = 0;
 		virtual bool		update(const GameTimer& gt) = 0;
 		virtual bool		handleEvent(WPARAM btnState) = 0;
-		virtual void		BuildScene() = 0;
+		virtual void		BuildScene();
 		Game*				mGame;
 	protected:
 		void				requestStackPush(States::ID stateID);

@@ -37,7 +37,7 @@ void SceneNode::update(const GameTimer& gt)
 
 void SceneNode::updateCurrent(const GameTimer& gt)
 {
-	// Do nothing by default
+	
 }
 
 void SceneNode::updateChildren(const GameTimer& gt)
@@ -56,7 +56,7 @@ void SceneNode::draw() const
 
 void SceneNode::drawCurrent() const
 {
-	//Empty for now
+	
 }
 
 void SceneNode::drawChildren() const
@@ -75,7 +75,7 @@ void SceneNode::build()
 
 void SceneNode::buildCurrent()
 {
-	//Empty for now
+	
 }
 
 void SceneNode::buildChildren()
@@ -144,11 +144,9 @@ XMFLOAT4X4 SceneNode::getTransform() const
 
 void SceneNode::onCommand(const Command& command, const GameTimer& gt)
 {
-	// Command current node, if category matches
+	
 	if (command.category & getCategory())
 		command.action(*this, gt);
-
-	// Command children
 	for (Ptr& child : mChildren)
 		child->onCommand(command, gt);
 }

@@ -5,26 +5,26 @@
 
 TitleState::TitleState(StateStack& stack, Context context, Game* game)
 : State(stack, context, game)
-, mBackground(nullptr)
-, mSceneGraph(new SceneNode(game))
+, m_TitleScreenBackground(nullptr)
+, m_SceneGraph(new SceneNode(game))
 {
 	BuildScene();
 }
 
 void TitleState::draw()
 {
-	mSceneGraph->draw();
+	// we draw our scene graph
+	m_SceneGraph->draw();
 }
 
 bool TitleState::update(const GameTimer& gt)
 {
-	mSceneGraph->update(gt);
+	m_SceneGraph->update(gt);
 	return true;
 }
 
 bool TitleState::handleEvent(WPARAM btnState)
 {
-	//key pressed
 	requestStackPop();
 	requestStackPush(States::Menu);
 
@@ -35,28 +35,30 @@ bool TitleState::handleEvent(WPARAM btnState)
 
 void TitleState::BuildScene()
 {
+	//Clear items, and resources.
 	mGame->mAllRitems.clear();
 	mGame->mOpaqueRitems.clear();
 	mGame->mFrameResources.clear();
+	// Build our materials
 	mGame->BuildMaterials();
 
 
 	std::unique_ptr<SpriteNode> backgroundSprite(new SpriteNode(mGame, "TitleScreen"));
-	mBackground = backgroundSprite.get();
-	mBackground->setPosition(0, 0, 0);
-	mBackground->setScale(12.0, 1.0, 8.5);
-	mBackground->setVelocity(0, 0, 0);
-	mSceneGraph->attachChild(std::move(backgroundSprite));
+	m_TitleScreenBackground = backgroundSprite.get();
+	m_TitleScreenBackground->setPosition(0, 0, 0);
+	m_TitleScreenBackground->setScale(12.0, 1.0, 8.5);
+	m_TitleScreenBackground->setVelocity(0, 0, 0);
+	m_SceneGraph->attachChild(std::move(backgroundSprite));
 
 	std::unique_ptr<SpriteNode> TitlePrompt(new SpriteNode(mGame, "TitleScreenPrompt"));
-	mPrompt = TitlePrompt.get();
-	mPrompt->setPosition(0, 0.1, 0);
-	mPrompt->setScale(6, 1.0, 5);
-	mPrompt->setVelocity(0, 0, 0);
-	mSceneGraph->attachChild(std::move(TitlePrompt));
+	m_TitleScreenPrompt = TitlePrompt.get();
+	m_TitleScreenPrompt->setPosition(0, 0.1, 0);
+	m_TitleScreenPrompt->setScale(6, 1.0, 5);
+	m_TitleScreenPrompt->setVelocity(0, 0, 0);
+	m_SceneGraph->attachChild(std::move(TitlePrompt));
 
 
-	mSceneGraph->build();
+	m_SceneGraph->build();
 
 
 	for (auto& e : mGame->mAllRitems)

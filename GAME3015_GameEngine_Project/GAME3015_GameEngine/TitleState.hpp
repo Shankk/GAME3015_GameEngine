@@ -14,10 +14,10 @@ class TitleState : public State
 		virtual bool		handleEvent(WPARAM btnState);
 
 	private:
-		SpriteNode* mBackground;
-		SpriteNode* mPrompt;
+		SpriteNode* m_TitleScreenBackground;
+		SpriteNode* m_TitleScreenPrompt;
 
-		SceneNode* mSceneGraph;
+		SceneNode* m_SceneGraph;
 
 		// Inherited via State
 		virtual void BuildScene() override;

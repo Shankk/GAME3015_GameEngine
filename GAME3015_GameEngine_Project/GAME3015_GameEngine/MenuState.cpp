@@ -4,12 +4,12 @@
 MenuState::MenuState(StateStack& stack, Context context, Game* game)
 : State(stack, context, game)
 , mOptionIndex(0)
-, mSceneGraph(new SceneNode(game))
-, mBackground(nullptr)
-, mMenuPlay(nullptr)
-, mMenuSetting(nullptr)
-, mMenuQuit(nullptr)
-, mMenuSelector (nullptr)
+, m_SceneGraph(new SceneNode(game))
+, m_MenuScreenBackground(nullptr)
+, m_PlayButton(nullptr)
+, m_SettingButton(nullptr)
+, m_QuitButton(nullptr)
+, m_SelectorSprite (nullptr)
 {
 	BuildScene();
 
@@ -17,18 +17,18 @@ MenuState::MenuState(StateStack& stack, Context context, Game* game)
 
 void MenuState::draw()
 {
-	mSceneGraph->draw();
+	m_SceneGraph->draw();
 }
 
 bool MenuState::update(const GameTimer& gt)
 {
-	mSceneGraph->update(gt);
+	m_SceneGraph->update(gt);
 
 	float x = mOptions[mOptionIndex]->getWorldPosition().x - 1.25f;
 	float y = mOptions[mOptionIndex]->getWorldPosition().y;
 	float z = mOptions[mOptionIndex]->getWorldPosition().z;
 
-	mMenuSelector->setPosition(x, y, z);
+	m_SelectorSprite->setPosition(x, y, z);
 
 	return true;
 }
@@ -49,13 +49,12 @@ bool MenuState::handleEvent(WPARAM btnState)
 		}
 		else if (mOptionIndex == Exit)
 		{
-			// The exit option was chosen, by removing itself, the stack will be empty, and the game will know it is time to close.
 			requestStackPop();
 		}
 	}
 	else if (btnState == VK_LEFT)
 	{
-		// Decrement and wrap-around
+		
 		if (mOptionIndex > 0)
 			mOptionIndex--;
 		else
@@ -65,7 +64,6 @@ bool MenuState::handleEvent(WPARAM btnState)
 	}
 	else if (btnState == VK_RIGHT)
 	{
-		// Increment and wrap-around
 		if (mOptionIndex < mOptions.size() - 1)
 			mOptionIndex++;
 		else
@@ -99,45 +97,45 @@ void MenuState::BuildScene()
 	mGame->BuildMaterials();
 
 	std::unique_ptr<SpriteNode> backgroundSprite(new SpriteNode(mGame, "TitleScreen"));
-	mBackground = backgroundSprite.get();
-	mBackground->setPosition(0, 0, 0.0);
-	mBackground->setScale(12.0, 1.0, 8.5);
-	mBackground->setVelocity(0, 0, 0);
-	mSceneGraph->attachChild(std::move(backgroundSprite));
+	m_MenuScreenBackground = backgroundSprite.get();
+	m_MenuScreenBackground->setPosition(0, 0, 0.0);
+	m_MenuScreenBackground->setScale(12.0, 1.0, 8.5);
+	m_MenuScreenBackground->setVelocity(0, 0, 0);
+	m_SceneGraph->attachChild(std::move(backgroundSprite));
 
 	std::unique_ptr<SpriteNode> menuPlaySprite(new SpriteNode(mGame, "MenuPlay"));
-	mMenuPlay = menuPlaySprite.get();
-	mMenuPlay->setPosition(-2, 0.1, 0.0);
-	mMenuPlay->setScale(4.0, 1.0, 4.0);
-	mMenuPlay->setVelocity(0, 0, 0);
-	mSceneGraph->attachChild(std::move(menuPlaySprite));
-	mOptions.push_back(mMenuPlay);
+	m_PlayButton = menuPlaySprite.get();
+	m_PlayButton->setPosition(-2, 0.1, 0.0);
+	m_PlayButton->setScale(4.0, 1.0, 4.0);
+	m_PlayButton->setVelocity(0, 0, 0);
+	m_SceneGraph->attachChild(std::move(menuPlaySprite));
+	mOptions.push_back(m_PlayButton);
 
 	std::unique_ptr<SpriteNode> menuSettingSprite(new SpriteNode(mGame, "MenuSettingTex"));
-	mMenuSetting = menuSettingSprite.get();
-	mMenuSetting->setPosition(0, 0.1, 0.0);
-	mMenuSetting->setScale(4.0, 1.0, 4.0);
-	mMenuSetting->setVelocity(0, 0, 0);
-	mSceneGraph->attachChild(std::move(menuSettingSprite));
-	mOptions.push_back(mMenuSetting);
+	m_SettingButton = menuSettingSprite.get();
+	m_SettingButton->setPosition(0, 0.1, 0.0);
+	m_SettingButton->setScale(4.0, 1.0, 4.0);
+	m_SettingButton->setVelocity(0, 0, 0);
+	m_SceneGraph->attachChild(std::move(menuSettingSprite));
+	mOptions.push_back(m_SettingButton);
 
 	std::unique_ptr<SpriteNode> menuQuitSprite(new SpriteNode(mGame, "MenuQuit"));
-	mMenuQuit = menuQuitSprite.get();
-	mMenuQuit->setPosition(2.5, 0.1, 0.0);
-	mMenuQuit->setScale(4.0, 1.0, 4.0);
-	mMenuQuit->setVelocity(0, 0, 0);
-	mSceneGraph->attachChild(std::move(menuQuitSprite));
+	m_QuitButton = menuQuitSprite.get();
+	m_QuitButton->setPosition(2.5, 0.1, 0.0);
+	m_QuitButton->setScale(4.0, 1.0, 4.0);
+	m_QuitButton->setVelocity(0, 0, 0);
+	m_SceneGraph->attachChild(std::move(menuQuitSprite));
 
-	mOptions.push_back(mMenuQuit);
+	mOptions.push_back(m_QuitButton);
 
 	std::unique_ptr<SpriteNode> menuArrowSprite(new SpriteNode(mGame, "MenuArrow"));
-	mMenuSelector = menuArrowSprite.get();
-	mMenuSelector->setPosition(-0.5, 0.1, 0.0);
-	mMenuSelector->setScale(0.75f, 1.0f, 0.75f);
-	mMenuSelector->setVelocity(0, 0, 0);
-	mSceneGraph->attachChild(std::move(menuArrowSprite));
+	m_SelectorSprite = menuArrowSprite.get();
+	m_SelectorSprite->setPosition(-0.5, 0.1, 0.0);
+	m_SelectorSprite->setScale(0.75f, 1.0f, 0.75f);
+	m_SelectorSprite->setVelocity(0, 0, 0);
+	m_SceneGraph->attachChild(std::move(menuArrowSprite));
 
-	mSceneGraph->build();
+	m_SceneGraph->build();
 
 
 	for (auto& e : mGame->mAllRitems)

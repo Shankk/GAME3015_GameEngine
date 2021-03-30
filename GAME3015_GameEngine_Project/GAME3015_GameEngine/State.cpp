@@ -12,10 +12,14 @@ State::State(StateStack& stack, Context context, Game* game)
 , mContext(context)
 , mGame(game)
 {
-	//BuildScene();
+
 }
 
 State::~State()
+{
+}
+
+void State::BuildScene()
 {
 }
 

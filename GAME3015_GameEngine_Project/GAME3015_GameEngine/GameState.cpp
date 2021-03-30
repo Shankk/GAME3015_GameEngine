@@ -4,11 +4,8 @@
 GameState::GameState(StateStack& stack, Context context, Game* game)
 : State(stack, context, game)
 , mWorld(&(mGame->mWorld))
-, mPlayer(*context.player)
-, mPauseBackground(nullptr)
-, mPausedText(nullptr)
-, mPauseInstructionText(nullptr)
-, mPauseSceneGraph(new SceneNode(game))
+, m_PauseBackground(nullptr)
+, m_PauseSceneGraph(new SceneNode(game))
 {
 	BuildScene();
 }
@@ -16,33 +13,30 @@ GameState::GameState(StateStack& stack, Context context, Game* game)
 void GameState::draw()
 {
 	mWorld->draw();
-	
 }
 
 bool GameState::update(const GameTimer& gt)
 {
 	ProcessInput();
 	mWorld->update(gt);
-
 	return true;
 }
 
 bool GameState::handleEvent(WPARAM btnState)
 {
-#pragma region step 1
 	if (btnState == 'P')
 	{
 		requestStackPush(States::Pause);
 	}
-#pragma endregion
+
 	return true;
 }
 
 void GameState::ProcessInput()
 {
 	CommandQueue& commands = mWorld->getCommandQueue();
-	mPlayer.handleEvent(commands);
-	mPlayer.handleRealtimeInput(commands);
+	(getContext().player)->handleEvent(commands);
+	(getContext().player)->handleRealtimeInput(commands);
 }
 
 void GameState::BuildScene()
@@ -54,20 +48,17 @@ void GameState::BuildScene()
 
 	mGame->BuildMaterials();
 
-
 	mWorld->buildScene();
 
-	//pause stuff
-	
 	std::unique_ptr<SpriteNode> backgroundSprite(new SpriteNode(mGame, "PauseDisplay"));
-	mPauseBackground = backgroundSprite.get();
-	mPauseBackground->setPosition(0, 0.15, -1);
-	mPauseBackground->setScale(8, 1.0, 8);
-	mPauseBackground->setVelocity(0, 0, 0);
-	mPauseSceneGraph->attachChild(std::move(backgroundSprite));
+	m_PauseBackground = backgroundSprite.get();
+	m_PauseBackground->setPosition(0, 0.15, -1);
+	m_PauseBackground->setScale(8, 1.0, 8);
+	m_PauseBackground->setVelocity(0, 0, 0);
+	m_PauseSceneGraph->attachChild(std::move(backgroundSprite));
 
-	mPauseSceneGraph->build();
-	//pause stuff end
+	m_PauseSceneGraph->build();
+	
 	for (auto& e : mGame->mAllRitems)
 		mGame->mOpaqueRitems.push_back(e.get());
 
